@@ -11,13 +11,15 @@ AccelStepper pumpMotor(AccelStepper::DRIVER,stepperDriverPul,stepperDriverDir);
 
 #define pctLed 9
 
-#define swConfirmar 10
-#define swFDC 11
+#define swConfirmar 10    //botão de confirmação
+#define swFDC 11          //Chave de fim de curso
+#define swPCV 2           //Modo de ventilação por pressão controlada (PCV)
+#define swAC_PCV 3        //Modo de ventilação assistida/controlada por pressão (PCV A/C)
 
-#define pot1 A2
-#define pot2 A3
-#define pot3 A4
-#define pot4 A5
+#define pot1 A2           //parâmetro 1
+#define pot2 A3           //parâmetro 2
+#define pot3 A4           //parêmetro 3
+#define pot4 A5           //parâmetro 4
 
 #define pressureSensor A0
 
@@ -29,6 +31,8 @@ void setup() {
   // Inputs
   pinMode(swConfirmar,INPUT_PULLUP);
   pinMode(swFDC, INPUT_PULLUP);
+  pinMode(swPCV, INPUT_PULLUP);
+  pinMode(swAC_PCV, INPUT_PULLUP);
   // Outputs
   pinMode(stepperDriverDir,OUTPUT);
   pinMode(stepperDriverEn,OUTPUT);
