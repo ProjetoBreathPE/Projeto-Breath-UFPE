@@ -3,26 +3,23 @@
 #include <AccelStepper.h>
 
 // Pins
-#define stepperDriverPul 4
-#define stepperDriverEn  5
-#define stepperDriverDir 6
+#define stepperDriverEn  4
+#define stepperDriverDir 5
+#define stepperDriverPul 6
 
 AccelStepper pumpMotor(AccelStepper::DRIVER,stepperDriverPul,stepperDriverDir);
 
-#define pctLed 23
-#define alarmeLed 22
-#define buzzer 45
+#define pctLed 9
 
-#define swSilence 32
-#define swConfirmar 33
-#define swFDC 40
+#define swConfirmar 10
+#define swFDC 11
 
-#define pot1 14
-#define pot2 15
-#define pot3 16
-#define pot4 17
+#define pot1 A2
+#define pot2 A3
+#define pot3 A4
+#define pot4 A5
 
-#define pressureSensor 19
+#define pressureSensor A0
 
 // For the loop
 #define controlLoopTime 100 //milliseconds
@@ -30,7 +27,6 @@ unsigned long controlNow,controlNext;
 
 void setup() {
   // Inputs
-  pinMode(swSilence,INPUT_PULLUP);
   pinMode(swConfirmar,INPUT_PULLUP);
   pinMode(swFDC, INPUT_PULLUP);
   // Outputs
