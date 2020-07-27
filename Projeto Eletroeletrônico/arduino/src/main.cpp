@@ -30,8 +30,7 @@ void setup() {
   // Inputs
   pinMode(swConfirmar,INPUT_PULLUP);
   pinMode(swFDC, INPUT_PULLUP);
-  pinMode(swPCV, INPUT_PULLUP);
-  pinMode(swAC_PCV, INPUT_PULLUP);
+  pinMode(swModo, INPUT_PULLUP);
   // Outputs
   pinMode(stepperDriverDir,OUTPUT);
   pinMode(stepperDriverEn,OUTPUT);
