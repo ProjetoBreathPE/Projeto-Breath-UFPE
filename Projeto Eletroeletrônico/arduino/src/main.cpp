@@ -13,8 +13,7 @@ AccelStepper pumpMotor(AccelStepper::DRIVER,stepperDriverPul,stepperDriverDir);
 
 #define swConfirmar 10    //botão de confirmação
 #define swFDC 11          //Chave de fim de curso
-#define swPCV 2           //Modo de ventilação por pressão controlada (PCV)
-#define swAC_PCV 3        //Modo de ventilação assistida/controlada por pressão (PCV A/C)
+#define swModo 2           //Modo de ventilação
 
 #define pot1 A2           //parâmetro 1
 #define pot2 A3           //parâmetro 2
