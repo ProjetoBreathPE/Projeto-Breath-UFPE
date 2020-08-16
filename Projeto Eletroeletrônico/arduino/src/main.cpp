@@ -1,11 +1,9 @@
 #include <Arduino.h>
 
-#include <AccelStepper.h>
-
 // Pins
-#define stepperDriverEn  4
-#define stepperDriverDir 5
-#define stepperDriverPul 6
+#define DriverEn  4
+#define DriverDir 5
+#define DriverPul 6
 
 AccelStepper pumpMotor(AccelStepper::DRIVER,stepperDriverPul,stepperDriverDir);
 
@@ -22,6 +20,17 @@ AccelStepper pumpMotor(AccelStepper::DRIVER,stepperDriverPul,stepperDriverDir);
 
 #define pressureSensor A0
 
+
+// PARÂMETROS DO CICLO
+
+
+float tCycleTimer = 0;       // Absolute time (s) at start of each breathing cycle
+float tInsp = 0;             // Tempo (s) de inspiração calculado
+float tHoldInsp = 0;         // Tempo (s) de pausa inspiratória calculado
+float tExp = 0;              // Tempo (s) de expiração calculado
+float tPeriodo = 0;          // Período (s) do ciclo respiratório
+
+
 // For the loop
 #define controlLoopTime 100 //milliseconds
 unsigned long controlNow,controlNext;
@@ -32,9 +41,17 @@ void setup() {
   pinMode(swFDC, INPUT_PULLUP);
   pinMode(swModo, INPUT_PULLUP);
   // Outputs
-  pinMode(stepperDriverDir,OUTPUT);
-  pinMode(stepperDriverEn,OUTPUT);
-  pinMode(stepperDriverPul,OUTPUT);
+  pinMode(DriverDir,OUTPUT);
+  pinMode(DriverEn,OUTPUT);
+  pinMode(DriverPul,OUTPUT);
+  
+  digitalWrite(DriverEn, LOW); //nivel baixo habilita driver
+}
+void inspRoutine(){
+  digitalWrite(DriverDir, HIGH); //direção de rotação
+  //pulsos ativos na borda de subida
+  
+  
 }
 
 void runControlLoop(){
@@ -62,4 +79,13 @@ float pressureReader(){
   
   float pressure = (Pmax - Pmin) / (4.5 - 0.28) * convertVsensor;
   return pressure;
+}
+
+void calculaFormaDeOnda(){
+  tPeríodo = 60 / pot1;
+}
+
+//Retorna o tempo (s) atual em segundos desde o inicio da execuçao do arduino. >>>> OVERFLOW em 50 dias (reset). 
+unsigned long relogio(){
+  return millis()*1e-3;
 }
