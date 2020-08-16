@@ -33,14 +33,14 @@ const int BAG_CLEAR_TOL = 10;   // The tolerance (clicks) to consider clear of b
 
 
 // Limites dos controles
-const int FREQ_MIN = 10;
-const int FREQ_MAX = 35;
+const int FREQ_MIN = 1;
+const int FREQ_MAX = 60;
 const int FREQ_RESOLUC = 1;
-const float TINSP_MIN = 1;
-const float TINSP_MAX = 4;
+const float TINSP_MIN = 0.3;
+const float TINSP_MAX = 6;
 const float TINSP_RESOLUC = 0.1;
-const int PIP_MIN = 0;
-const int PIP_MAX = 35; 
+const int PIP_MIN = 5;
+const int PIP_MAX = 55; 
 const int PIP_RESOLUC = 0.1; 
 const float SENS_MIN = 0.5;
 const float SENS_MAX = 2;
