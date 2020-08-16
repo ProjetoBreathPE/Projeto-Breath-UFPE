@@ -41,10 +41,10 @@ const float TINSP_MAX = 6;
 const float TINSP_RESOLUC = 0.1;
 const int PIP_MIN = 5;
 const int PIP_MAX = 55; 
-const int PIP_RESOLUC = 0.1; 
-const float SENS_MIN = 0.5;
+const int PIP_RESOLUC = 0.2; 
+const float SENS_MIN = 0.4;
 const float SENS_MAX = 2;
-const float SENS_RESOLUC = 0.1;
+const float SENS_RESOLUC = 0.2;
 const int ANALOG_PIN_MAX = 1023; // The maximum count on analog pins
 
 // Safety settings
