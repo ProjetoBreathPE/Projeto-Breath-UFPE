@@ -1,25 +1,5 @@
 #include <Arduino.h>
-
-// Pins
-#define DriverEn  4
-#define DriverDir 5
-#define DriverPul 6
-
-AccelStepper pumpMotor(AccelStepper::DRIVER,stepperDriverPul,stepperDriverDir);
-
-#define pctLed 9
-
-#define swConfirmar 10    //botão de confirmação
-#define swFDC 11          //Chave de fim de curso
-#define swModo 2           //Modo de ventilação
-
-#define pot1 A2           //parâmetro 1
-#define pot2 A3           //parâmetro 2
-#define pot3 A4           //parêmetro 3
-#define pot4 A5           //parâmetro 4
-
-#define pressureSensor A0
-
+#include <Constantes.h>
 
 // PARÂMETROS DO CICLO
 
@@ -39,7 +19,7 @@ void setup() {
   // Inputs
   pinMode(swConfirmar,INPUT_PULLUP);
   pinMode(swFDC, INPUT_PULLUP);
-  pinMode(swModo, INPUT_PULLUP);
+  pinMode(swAssistMode, INPUT_PULLUP);
   // Outputs
   pinMode(DriverDir,OUTPUT);
   pinMode(DriverEn,OUTPUT);
