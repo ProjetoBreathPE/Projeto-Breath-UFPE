@@ -67,14 +67,14 @@ float pressureReader(){
 }
 
 void leParametros(){
-  PIP = PIP_MIN + (PIP_MAX - PIP_MIN) * (1 / PIP_RESOLUC) * analogRead(pot_PIP) / ANALOG_PIN_MAX;
-  tInspiracao = TINSP_MIN + (TINSP_MAX - TINSP_MIN) * analogRead(pot_tInsp) / ANALOG_PIN_MAX;
-  frequencia = FREQ_MIN + (FREQ_MAX - FREQ_MIN) * analogRead(pot_freq) / ANALOG_PIN_MAX;
-  sensibilidade = SENS_MIN + (SENS_MAX - SENS_MIN) * analogRead(pot_sens) / ANALOG_PIN_MAX;
+  PIP = round(PIP_MIN + (PIP_MAX - PIP_MIN) / ANALOG_PIN_MAX * analogRead(pot_PIP) / PIP_RESOLUC) * PIP_RESOLUC;
+  tInspiracao = round(TINSP_MIN + (TINSP_MAX - TINSP_MIN) / ANALOG_PIN_MAX * analogRead(pot_tInsp) / TINSP_RESOLUC) * TINSP_RESOLUC;
+  frequencia = round(FREQ_MIN + (FREQ_MAX - FREQ_MIN) / ANALOG_PIN_MAX * analogRead(pot_freq) / FREQ_RESOLUC) * FREQ_RESOLUC;
+  sensibilidade = round(SENS_MIN + (SENS_MAX - SENS_MIN) / ANALOG_PIN_MAX * analogRead(pot_sens) / SENS_RESOLUC) * SENS_RESOLUC;
 }
 
 void calculaFormaDeOnda(){
-  tPeríodo = 60 / freq;
+  tPeríodo = 60 / frequencia;
 }
 
 //Retorna o tempo (s) atual em segundos desde o inicio da execuçao do arduino. >>>> OVERFLOW em 50 dias (reset). 
