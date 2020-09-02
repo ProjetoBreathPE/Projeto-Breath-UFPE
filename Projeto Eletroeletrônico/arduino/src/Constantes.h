@@ -14,22 +14,22 @@ const int BAG_CLEAR_TOL = 10;   // The tolerance (clicks) to consider clear of b
 
 // Pins
 
-#define DriverEn  4       //Enable do driver DM322E - nível baixo habilita
-#define DriverDir 5       //Direção de rotação - tempo mínimo entre sinal de direção e rotação: 5us
-#define DriverPul 6       //Pulsos de controle - Ativado na borda de subida, largura mínima: 2,5us
+#define DRIVER_EN  4       //Enable do driver DM322E - nível baixo habilita
+#define DRIVER_DIR 5       //Direção de rotação - tempo mínimo entre sinal de direção e rotação: 5us
+#define DRIVER_PUL 6       //Pulsos de controle - Ativado na borda de subida, largura mínima: 2,5us
 
-#define pctLed 9
+#define LED_PATIENT_EFFORT 9          //Led de indicação de esforço do paciente
 
-#define swConfirmar 10    //botão de confirmação
-#define swFDC 11          //Chave de fim de curso
-#define swAssistMode 2    //Modo de ventilação
+#define SWITCH_CONFIRM 10       //botão de confirmação
+#define SWITCH_POSITION 11      //Chave de fim de curso
+#define SWITCH_MODE 2           //Modo de ventilação
 
-#define pot_PIP A2        //Pressão inspiratória de pico
-#define pot_tInsp A3      //tempo de inspiração
-#define pot_freq A4       //frequência respiratória
-#define pot_sens A5       //sensibilidade no modo assistido
+#define POT_PIP A2               //Pressão inspiratória de pico
+#define POT_INSP_TIME A3         //tempo de inspiração
+#define POT_FREQUENCE A4         //frequência respiratória
+#define POT_SENSIBILITY A5       //sensibilidade no modo assistido
 
-#define pressureSensor A0
+#define SENSOR_PRESSURE_1 A0
 
 
 // Limites dos controles
