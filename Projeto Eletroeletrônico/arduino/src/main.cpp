@@ -22,21 +22,19 @@ unsigned long controlNow,controlNext;
 
 void setup() {
   // Inputs
-  pinMode(swConfirmar,INPUT_PULLUP);
-  pinMode(swFDC, INPUT_PULLUP);
-  pinMode(swAssistMode, INPUT_PULLUP);
+  pinMode(SWITCH_CONFIRM,INPUT_PULLUP);
+  pinMode(SWITCH_POSITION, INPUT_PULLUP);
+  pinMode(SWITCH_MODE, INPUT_PULLUP);
   // Outputs
-  pinMode(DriverDir,OUTPUT);
-  pinMode(DriverEn,OUTPUT);
-  pinMode(DriverPul,OUTPUT);
+  pinMode(DRIVER_DIR,OUTPUT);
+  pinMode(DRIVER_EN,OUTPUT);
+  pinMode(DRIVER_PUL,OUTPUT);
   
-  digitalWrite(DriverEn, LOW); //nivel baixo habilita driver
+  digitalWrite(DRIVER_EN, LOW); //nivel baixo habilita driver
 }
 void inspRoutine(){
-  digitalWrite(DriverDir, HIGH); //direção de rotação
+  digitalWrite(DRIVER_DIR, HIGH); //direção de rotação
   //pulsos ativos na borda de subida
-  
-  
 }
 
 void runControlLoop(){
@@ -52,9 +50,9 @@ void loop() {
   checkCOmm();
   // put your main code here, to run repeatedly:
 }
-
+ 
 float pressureReader(){
-  int Vsensor = analogRead(pressureSensor);
+  int Vsensor = analogRead(SENSOR_PRESSURE_1);
   float Pmin = -10.0;
   float Pmax = 120.0;
   float convertVsensor = 5/ANALOG_PIN_MAX;
@@ -67,10 +65,10 @@ float pressureReader(){
 }
 
 void leParametros(){
-  PIP = round(PIP_MIN + (PIP_MAX - PIP_MIN) / ANALOG_PIN_MAX * analogRead(pot_PIP) / PIP_RESOLUC) * PIP_RESOLUC;
-  tInspiracao = round(TINSP_MIN + (TINSP_MAX - TINSP_MIN) / ANALOG_PIN_MAX * analogRead(pot_tInsp) / TINSP_RESOLUC) * TINSP_RESOLUC;
-  frequencia = round(FREQ_MIN + (FREQ_MAX - FREQ_MIN) / ANALOG_PIN_MAX * analogRead(pot_freq) / FREQ_RESOLUC) * FREQ_RESOLUC;
-  sensibilidade = round(SENS_MIN + (SENS_MAX - SENS_MIN) / ANALOG_PIN_MAX * analogRead(pot_sens) / SENS_RESOLUC) * SENS_RESOLUC;
+  PIP = round(PIP_MIN + (PIP_MAX - PIP_MIN) / ANALOG_PIN_MAX * analogRead(POT_PIP) / PIP_RESOLUC) * PIP_RESOLUC;
+  tInspiracao = round(TINSP_MIN + (TINSP_MAX - TINSP_MIN) / ANALOG_PIN_MAX * analogRead(POT_INSP_TIME) / TINSP_RESOLUC) * TINSP_RESOLUC;
+  frequencia = round(FREQ_MIN + (FREQ_MAX - FREQ_MIN) / ANALOG_PIN_MAX * analogRead(POT_FREQUENCE) / FREQ_RESOLUC) * FREQ_RESOLUC;
+  sensibilidade = round(SENS_MIN + (SENS_MAX - SENS_MIN) / ANALOG_PIN_MAX * analogRead(POT_SENSIBILITY) / SENS_RESOLUC) * SENS_RESOLUC;
 }
 
 void calculaFormaDeOnda(){
