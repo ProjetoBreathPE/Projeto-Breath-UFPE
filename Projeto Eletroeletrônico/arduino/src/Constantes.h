@@ -45,7 +45,15 @@ const int PIP_RESOLUC = 0.2;
 const float SENS_MIN = 0.4;
 const float SENS_MAX = 2;
 const float SENS_RESOLUC = 0.2;
-const int ANALOG_PIN_MAX = 1023; // The maximum count on analog pins
+const int VOLTAGE_CONVERSOR = 5/1023; // conversão do sinal digital para valores de tensão.
+
+
+//sensor de pressão
+
+//Tensão a 120 cmH2O = 4.5V nominal (entre 4.4 e 4.6)
+//Tensão a 0 cmH2O = 0.35V nominal (entre 0.30 e 0.40)
+//Tensão a -10 cmH2O = 0.28V novinal (entre 0.23 e 0.33)
+const float PRESSURE_CONVERSOR = VOLTAGE_CONVERSOR * (120 + 10) / (4.5 - 0.28);
 
 // Safety settings
 const float MAX_PRESSURE = 40.0;        // Trigger high pressure alarm
