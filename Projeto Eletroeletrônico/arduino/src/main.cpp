@@ -53,15 +53,7 @@ void checkComm(){
 
 
 float pressureReader(){
-  int Vsensor = analogRead(SENSOR_PRESSURE_1);
-  float Pmin = -10.0;
-  float Pmax = 120.0;
-  float convertVsensor = 5/ANALOG_PIN_MAX;
-  //Tensão a 120 cmH2O = 4.5V nominal (entre 4.4 e 4.6)
-  //Tensão a 0 cmH2O = 0.35V nominal (entre 0.30 e 0.40)
-  //Tensão a -10 cmH2O = 0.28V novinal (entre 0.23 e 0.33)
-  
-  float pressure = (Pmax - Pmin) / (4.5 - 0.28) * convertVsensor;
+  float pressure = analogRead(SENSOR_PRESSURE_1) * PRESSURE_CONVERSOR;
   return pressure;
 }
 
