@@ -1,12 +1,33 @@
+'''
+Código testado em 16/09/2020 e funcionando apanas com um erro intermitente:
+
+Traceback (most recent call last):
+File "/media/pi/MORIMOTO/rapberry.txt", line 7, in <module>
+if ser.in_waiting > 0:
+File "/usr/lib/python3/dist-packages/serial/serialposix.py", line 467, in in_waiting
+s = fcntl.ioctl(self.fd, TIOCINQ, TIOCM_zero_str)
+OSError: [Errno 5] Input/output error
+'''
+
+
 #!/usr/bin/env python3
 import serial
 if __name__ == '__main__':
-    ser = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+    ser = serial.Serial('/dev/ttyS0', 115200, timeout=1)
     ser.flush()
     while True:
         if ser.in_waiting > 0:
-            line = ser.readline().decode('utf-8').rstrip().split(",")
-	    if(line[0] == 's' and line[-1] == 'p') 
-	   	 if(len(line) == 5)
-			inspTime = line[1]
-			PIP = line[2]
+            line = ser.readline().decode('ascii').rstrip().split(",")
+            if line[0] == 's' and line[-1] == 'p':
+                inspTime = line[1]
+                PIP = line[2]
+                frequency = line[3]
+                sensibility = line[4]
+                ventMode = line[5]
+                print(inspTime)
+                print(PIP)
+                print(frequency)
+                print(sensibility)
+                print(ventMode)
+                print("tamanho do vetor: ")
+                print(len(line))
