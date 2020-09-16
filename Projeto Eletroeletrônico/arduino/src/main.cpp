@@ -58,10 +58,10 @@ float pressureReader(){
 }
 
 void inputReader(){
-  PIP = round(PIP_MIN + (PIP_MAX - PIP_MIN) / ANALOG_PIN_MAX * analogRead(POT_PIP) / PIP_RESOLUC) * PIP_RESOLUC;
-  inspTime = round(TINSP_MIN + (TINSP_MAX - TINSP_MIN) / ANALOG_PIN_MAX * analogRead(POT_INSP_TIME) / TINSP_RESOLUC) * TINSP_RESOLUC;
-  frequency = round(FREQ_MIN + (FREQ_MAX - FREQ_MIN) / ANALOG_PIN_MAX * analogRead(POT_FREQUENCE) / FREQ_RESOLUC) * FREQ_RESOLUC;
-  sensibility = round(SENS_MIN + (SENS_MAX - SENS_MIN) / ANALOG_PIN_MAX * analogRead(POT_SENSIBILITY) / SENS_RESOLUC) * SENS_RESOLUC;
+  PIP = PIP_MIN + (PIP_MAX - PIP_MIN) / 1023 * analogRead(POT_PIP);
+  inspTime = TINSP_MIN + (TINSP_MAX - TINSP_MIN) / 1023 * analogRead(POT_INSP_TIME);
+  frequency = FREQ_MIN + (FREQ_MAX - FREQ_MIN) / 1023 * analogRead(POT_FREQUENCE);
+  sensibility = SENS_MIN + (SENS_MAX - SENS_MIN) / 1023 * analogRead(POT_SENSIBILITY);
 }
 
 void waveCalculator(){
