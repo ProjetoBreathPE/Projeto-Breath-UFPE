@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <Constantes.h>
+#include "Constantes.h"
 
 // PARÂMETROS DO CICLO
 
@@ -15,6 +15,7 @@ float inspTime;             // Tempo (s) de inspiração
 float PIP;                  // Pressão inspiratória de pico (pressão máxima)
 float frequency;            // Frequência respiratória em rpm (respirações por minuto)
 float sensibility;          // Sensibilidade de disparo no modo assistido
+char ventMode;              // C para controlado e A para assistido
 
 // For the loop
 #define controlLoopTime 100 //milliseconds
@@ -29,12 +30,17 @@ void setup() {
   pinMode(DRIVER_DIR,OUTPUT);
   pinMode(DRIVER_EN,OUTPUT);
   pinMode(DRIVER_PUL,OUTPUT);
+
+  Serial.begin(115200, SERIAL_8N1); // SERIAL_8E1 significa palavra de 8 bits com 1 bit de paridade par (E de even) e 1 stop bit. A paridade serve para detecção de erros
   
   digitalWrite(DRIVER_EN, LOW); //nivel baixo habilita driver
 }
 void loop() {
+  pressureReader();
   runControlLoop();
-  checkCOmm();
+  inputReader();
+  pressureReader();
+  comunication();
   // put your main code here, to run repeatedly:
 }
 
@@ -47,8 +53,19 @@ void runControlLoop(){
 
 }
 
-void checkComm(){
-
+void comunication(){
+  //O 's' indica o início da transmissão, a vírgula separa os valores, que devem ser enviados na ordem correta e o p, junto com o println indicam o fim da transmissão.
+  Serial.print("s,"); 
+  Serial.print(inspTime);
+  Serial.print(',');
+  Serial.print(PIP);
+  Serial.print(',');
+  Serial.print(frequency);
+  Serial.print(',');
+  Serial.print(sensibility);
+  Serial.print(',');
+  Serial.print(ventMode);
+  Serial.println(",p"); //O ln adiciona mais um byte de recuo \r e outro de \n, que finaliza a string no raspberry.
 }
 
 
@@ -62,10 +79,14 @@ void inputReader(){
   inspTime = TINSP_MIN + (TINSP_MAX - TINSP_MIN) / 1023 * analogRead(POT_INSP_TIME);
   frequency = FREQ_MIN + (FREQ_MAX - FREQ_MIN) / 1023 * analogRead(POT_FREQUENCE);
   sensibility = SENS_MIN + (SENS_MAX - SENS_MIN) / 1023 * analogRead(POT_SENSIBILITY);
+  if(SWITCH_MODE == LOW)
+    ventMode = 'C';
+  else
+    ventMode = 'A';
 }
 
 void waveCalculator(){
-  tPeríod = 60 / frequency;
+  tPeriod = 60 / frequency;
 }
 
 //Retorna o tempo (s) atual em segundos desde o inicio da execuçao do arduino. >>>> OVERFLOW em 50 dias (reset). 
