@@ -48,6 +48,12 @@ const float SENS_MAX = 2;
 const float SENS_RESOLUC = 0.2;
 const int VOLTAGE_CONVERSOR = 5/1023; // conversão do sinal digital para valores de tensão.
 
+//Conversores dos inputs para devidas unidades
+const float PIP_CONVERSOR = PIP_MIN + (PIP_MAX - PIP_MIN) / 1023;
+const float inspTime_CONVERSOR = TINSP_MIN + (TINSP_MAX - TINSP_MIN) / 1023;
+const float frequency_CONVERSOR = FREQ_MIN + (FREQ_MAX - FREQ_MIN) / 1023;
+const float sensibility_CONVERSOR = SENS_MIN + (SENS_MAX - SENS_MIN) / 1023;
+
 
 //sensor de pressão
 

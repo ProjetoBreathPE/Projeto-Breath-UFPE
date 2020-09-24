@@ -35,6 +35,7 @@ void setup() {
   
   digitalWrite(DRIVER_EN, LOW); //nivel baixo habilita driver
 }
+
 void loop() {
   pressureReader();
   runControlLoop();
@@ -75,10 +76,10 @@ float pressureReader(){
 }
 
 void inputReader(){
-  PIP = PIP_MIN + (PIP_MAX - PIP_MIN) / 1023 * analogRead(POT_PIP);
-  inspTime = TINSP_MIN + (TINSP_MAX - TINSP_MIN) / 1023 * analogRead(POT_INSP_TIME);
-  frequency = FREQ_MIN + (FREQ_MAX - FREQ_MIN) / 1023 * analogRead(POT_FREQUENCE);
-  sensibility = SENS_MIN + (SENS_MAX - SENS_MIN) / 1023 * analogRead(POT_SENSIBILITY);
+  PIP = PIP_CONVERSOR * analogRead(POT_PIP);
+  inspTime = inspTime_CONVERSOR * analogRead(POT_INSP_TIME);
+  frequency = frequency_CONVERSOR * analogRead(POT_FREQUENCE);
+  sensibility = sensibility_CONVERSOR * analogRead(POT_SENSIBILITY);
   if(SWITCH_MODE == LOW)
     ventMode = 'C';
   else
