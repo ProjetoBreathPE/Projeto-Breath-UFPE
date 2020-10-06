@@ -38,7 +38,6 @@ int fase;
 
 unsigned long t0;
 unsigned long t1;
-int interval=50;
 
 void setup() {
   Serial.begin(115200);
@@ -52,9 +51,6 @@ void setup() {
 
 
 void loop() {
-  
-  
-  t1 = micros();
 
   if((t1-t0)>dt) {
     //Toma alguma decisão
@@ -76,44 +72,35 @@ float pressureReader(){
   return pressure;
 }
 
-void runControlLoop(){
+inline void runControlLoop(){
     switch(fase){
         case 0: //inspiração
-            if (timer - actualTime() < inspTime){
-                    StepMotor::setDir(1); //direção de rotação
-                    StepMotor::setSpeed(1/frequency)        
-                    for(int i = 0; i < pulses; i++){ //pulsos ativos na borda de subida 
-                        if(pressureReader() < PIP){
-                          StepMotor::act(t);
-                          }
-                        }
-                    }
-                }
+            if (micros() - t0 < inspTime){
+              StepMotor::setDir(1); //direção de rotação
+              StepMotor::setSpeed(1);        
+              if(pressureReader() < PIP){
+                StepMotor::act(micros());
+              }
+            }         
             else{
-                timer = actualTime();
+                t0 = micros();
                 fase = 1;
             }
         break;
 
         case 1: //expiração sem o peep        
-            if (timer - actualTime() < 1/frequency - inspTime) /*período - t_inspiração = t_expiração*/{
-                    StepMotor::setDir(0); //direção de rotação
-                    StepMotor::setSpeed(1/frequency)    //direção de rotação        
-                    for(int i = 0; i < pulses; i++){ //pulsos ativos na borda de subida 
-                        if(pressureReader() > 5){ //peep
-                          digitalWrite(DRIVER_PUL, LOW);
-                          digitalWrite(DRIVER_PUL, HIGH);
-                        }
-                    }
-                }        
+            if (micros() - t0 < 1/frequency - inspTime) /*período - t_inspiração = t_expiração*/{
+              StepMotor::setDir(0); //direção de rotação
+              StepMotor::setSpeed(1)            
+              if(pressureReader() > 5){ //peep
+                StepMotor::act(micros());
+              }
+            }
             else{
-            fase = 0;
-            timer = actualTime();            }
+              fase = 0;
+              t0 = actualTime();            
+            }
 
         break;
     }
-}
-
-unsigned long actualTime(){
-  return millis()*1e-3;
 }

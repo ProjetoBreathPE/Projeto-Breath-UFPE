@@ -68,6 +68,7 @@ inline void act(const unsigned long &t1)
 
   if((t1-t0)>dt)
   {
+    digitalWrite(DRIVER_DIR,Mdir);
     counter++;
    
     if((counter%NSpeed)==0) //->T=2*NSpeed*dt
@@ -80,7 +81,6 @@ inline void act(const unsigned long &t1)
       t0=t1;
     }
 
-    digitalWrite(DRIVER_DIR,Mdir);
     digitalWrite(DRIVER_PUL,Mstep);
   }
    
