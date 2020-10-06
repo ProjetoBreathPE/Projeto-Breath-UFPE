@@ -3,29 +3,9 @@ Daniel Gomes16:41
 #include "PComm.h"
 #include "StepMotor.h"
 
-#define POT_INSP_TIME A2         //tempo de inspiração
-#define POT_PIP A3               //Pressão inspiratória de pico
-#define POT_FREQUENCE A4         //frequência respiratória
-
 #define SENSOR_PRESSURE_1 A0
 
-// Limites dos controles
-const float TINSP_MIN = 0.3;
-const float TINSP_MAX = 6;
-const float PIP_MIN = 5;
-const float PIP_MAX = 55; 
-const float FREQ_MIN = 1;
-const float FREQ_MAX = 60;
-const float SENS_MIN = 0.4;
-const float SENS_MAX = 2;
-
-const float PIP_CONVERSOR = PIP_MIN + (PIP_MAX - PIP_MIN) / 1023;
-const float inspTime_CONVERSOR = TINSP_MIN + (TINSP_MAX - TINSP_MIN) / 1023;
-const float frequency_CONVERSOR = FREQ_MIN + (FREQ_MAX - FREQ_MIN) / 1023;
-
 const int VOLTAGE_CONVERSOR = 5/1023; // conversão do sinal digital para valores de tensão.
-
-const float PRESSURE_CONVERSOR = VOLTAGE_CONVERSOR * (120 + 10) / (4.5 - 0.28);
 
 float inspTime;             // Tempo (s) de inspiração
 float PIP;                  // Pressão inspiratória de pico (pressão máxima)
@@ -45,12 +25,14 @@ void setup() {
 
   t0=micros();
   
-  
-    timer = actualTime();
 }
 
 
 void loop() {
+
+  inputReader();
+  pressureReader();
+  runControlLoop();
 
   if((t1-t0)>dt) {
     //Toma alguma decisão
@@ -58,17 +40,19 @@ void loop() {
     //StepMotor::setSpeed(.)
     //StepMotor::setEna(.)
   
+    Serial.print(pressureReader());
   }
+}
 
 
-void inputReader(){
-    PIP = PIP_CONVERSOR * analogRead(POT_PIP);
-    inspTime = inspTime_CONVERSOR * analogRead(POT_INSP_TIME);
-    frequency = frequency_CONVERSOR * analogRead(POT_FREQUENCE);
+inline void inputReader(){
+    PIP = 30; //fixo para o teste do motor
+    inspTime = 1; //fixo para o teste do motor
+    frequency = 15; //fixo para o teste do motor
 }
 
 float pressureReader(){
-  float pressure = analogRead(SENSOR_PRESSURE_1) * PRESSURE_CONVERSOR;
+  float pressure = analogRead(SENSOR_PRESSURE_1) * 1023/35; //aDAPTADO para o teste do motor
   return pressure;
 }
 
