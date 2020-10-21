@@ -16,31 +16,30 @@ int pulses = 3;             //pulsos por comando
 int fase;
 
 
-unsigned long t0;
-unsigned long t1;
+unsigned long t0, t1, t2;
+unsigned long dt;
 
 void setup() {
   Serial.begin(115200);
   StepMotor::initMotor();
 
-  t0=micros();
+  dt = 1000;
+  t0 = micros();
+  t1 = t0;
+  t2 = t0;
   
 }
 
 
 void loop() {
-
-  inputReader();
-  pressureReader();
-  runControlLoop();
-
+  t1 = micros();
   if((t1-t0)>dt) {
-    //Toma alguma decisão
-    //StepMotor::setDir(.)
-    //StepMotor::setSpeed(.)
-    //StepMotor::setEna(.)
+    inputReader();
+    pressureReader();
+    runControlLoop();
   
     Serial.print(pressureReader());
+    t0 = t1;
   }
 }
 
@@ -59,30 +58,30 @@ float pressureReader(){
 inline void runControlLoop(){
     switch(fase){
         case 0: //inspiração
-            if (micros() - t0 < inspTime){
+            if (t1 - t2 < inspTime){
               StepMotor::setDir(1); //direção de rotação
               StepMotor::setSpeed(1);        
               if(pressureReader() < PIP){
-                StepMotor::act(micros());
+                StepMotor::act(t1);
               }
             }         
             else{
-                t0 = micros();
+                t2 = t1;
                 fase = 1;
             }
         break;
 
         case 1: //expiração sem o peep        
-            if (micros() - t0 < 1/frequency - inspTime) /*período - t_inspiração = t_expiração*/{
+            if (t1 - t2 < 1/frequency - inspTime) /*período - t_inspiração = t_expiração*/{
               StepMotor::setDir(0); //direção de rotação
               StepMotor::setSpeed(1)            
               if(pressureReader() > 5){ //peep
-                StepMotor::act(micros());
+                StepMotor::act(t1);
               }
             }
             else{
               fase = 0;
-              t0 = actualTime();            
+              t2 = t1;            
             }
 
         break;
