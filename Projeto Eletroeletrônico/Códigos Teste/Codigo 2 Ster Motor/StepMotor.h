@@ -68,8 +68,5 @@ inline void act(const unsigned long &t1)
 
     digitalWrite(DRIVER_PUL,Mstep);
   }
-   
-
-}
 }
 #endif __STEPMOTOR_H__
