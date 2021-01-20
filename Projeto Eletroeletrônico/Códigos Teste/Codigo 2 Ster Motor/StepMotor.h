@@ -19,7 +19,7 @@ int counter=0; //Não utilizada diretamente
 
 unsigned long dt=500; //Tempo em micro segundos
 
-void initMotor()
+inline void initMotor()
 {
 //Controle motor de passo
   pinMode(DRIVER_EN,OUTPUT);
