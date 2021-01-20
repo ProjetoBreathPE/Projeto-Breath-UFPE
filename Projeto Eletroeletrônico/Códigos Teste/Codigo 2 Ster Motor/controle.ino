@@ -10,7 +10,6 @@ const int VOLTAGE_CONVERSOR = 5/1023; // conversão do sinal digital para valore
 float inspTime;             // Tempo (s) de inspiração
 float PIP;                  // Pressão inspiratória de pico (pressão máxima)
 float frequency;            // Frequência respiratória em rpm (respirações por minuto)
-unsigned long timer;
 int pulses = 3;             //pulsos por comando
 
 int fase;
@@ -24,22 +23,22 @@ void setup() {
   StepMotor::initMotor();
 
   dt = 1000;
-  t0 = micros();
-  t1 = t0;
-  t2 = t0;
-  
+  actualTime = micros();
+  t1 = 0;
+  t2 = actualTime;
+  fase = 0;
 }
 
 
 void loop() {
-  t1 = micros();
-  if((t1-t0)>dt) {
+   actualTime = micros();
+   if((actualTime-t1)>dt) {
     inputReader();
     pressureReader();
     runControlLoop();
   
     Serial.print(pressureReader());
-    t0 = t1;
+    t1 = actualTime;
   }
 }
 
@@ -58,30 +57,33 @@ float pressureReader(){
 inline void runControlLoop(){
     switch(fase){
         case 0: //inspiração
-            if (t1 - t2 < inspTime){
+            if (actualTime - t2 < inspTime){
               StepMotor::setDir(1); //direção de rotação
               StepMotor::setSpeed(1);        
               if(pressureReader() < PIP){
-                StepMotor::act(t1);
+                StepMotor::act(actualTime);
               }
             }         
             else{
-                t2 = t1;
+                t2 = actualTime;
                 fase = 1;
             }
         break;
 
-        case 1: //expiração sem o peep        
-            if (t1 - t2 < 1/frequency - inspTime) /*período - t_inspiração = t_expiração*/{
+        case 1: //expiração com o peep        
+            if (actualTime - t2 < 1/frequency - inspTime) /*período - t_inspiração = t_expiração TRANSFORMAR EM INTEIRO*/
+            {
               StepMotor::setDir(0); //direção de rotação
               StepMotor::setSpeed(1)            
-              if(pressureReader() > 5){ //peep
+              if(pressureReader() > 5)
+                { //peep
                 StepMotor::act(t1);
-              }
+                }
             }
-            else{
+            else
+            {
               fase = 0;
-              t2 = t1;            
+              t2 = actualTime;            
             }
 
         break;
