@@ -1,5 +1,3 @@
-Daniel Gomes16:41
-
 #include "PComm.h"
 #include "StepMotor.h"
 
